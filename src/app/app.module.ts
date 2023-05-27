@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatIconModule } from '@angular/material/icon';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,  
     BrowserAnimationsModule,
     MatInputModule,
@@ -36,7 +38,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatToolbarModule,
     MatExpansionModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

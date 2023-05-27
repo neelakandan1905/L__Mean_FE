@@ -1,11 +1,12 @@
 <mat-card>
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm" >
+    <mat-progress-bar mode="indeterminate"  *ngIf="isLoading"></mat-progress-bar>
+    <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
         <mat-form-field>
-            <input matInput type="text" name="title" ngModel required minlength="3" #title="ngModel" placeholder="Title">
+            <input matInput type="text" name="title" [ngModel]= "postRowData?.title" required minlength="3" #title="ngModel" placeholder="Title">
             <mat-error *ngIf="title.invalid">Enter Title</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="text" name="content" ngModel required #content="ngModel" placeholder="Content">
+            <input matInput type="text" name="content" [ngModel]= "postRowData?.content" required #content="ngModel" placeholder="Content">
             <mat-error *ngIf="content.invalid">Enter Content</mat-error>
         </mat-form-field>
         <button 

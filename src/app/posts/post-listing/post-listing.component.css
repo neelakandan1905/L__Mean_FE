@@ -6,3 +6,7 @@
 .no-post {
     text-align: center;
 }
+
+mat-progress-bar {
+    margin: auto;
+}
