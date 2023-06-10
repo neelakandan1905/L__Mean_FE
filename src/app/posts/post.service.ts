@@ -26,11 +26,13 @@ constructor(private http: HttpClient, private router: Router) { }
         return {
           title: post.title,
           content: post.content,
+          imagePath: post.imagePath,
           id: post._id
         };
       });
     }))
     .subscribe(transformedPost => {
+      console.log(transformedPost);
       this.posts = transformedPost;
       this.postUpdated.next([...this.posts]);
     });
@@ -42,15 +44,20 @@ constructor(private http: HttpClient, private router: Router) { }
 
   getOnePostData(id: string) {
     // return {...this.posts.find(p => p.id == id)};
-    return this.http.get<any>(`http://localhost:3000/mean/post/${id}`);
+    return this.http.get<{_id: string, title: string, content:string, imagePath: string}>(`http://localhost:3000/mean/post/${id}`);
   }
 
   addPost(obj: any){
-    const post: Post = {id: obj?.id , title: obj.title, content: obj.content };
-    this.http.post<{message: string}>('http://localhost:3000/mean/post', post).subscribe((res:any) => {
+    // const post: Post = {id: obj?.id , title: obj.title, content: obj.content };
+    const postData = new FormData();
+    postData.append('title', obj.title);
+    postData.append('content', obj.content);
+    postData.append('image', obj.image, obj.title);
+    this.http.post<{message: string}>('http://localhost:3000/mean/post', postData).subscribe((res:any) => {
       console.log(res);
-      const id = res.postId;
-      post.id = id;
+      const post: Post = {id: res?.post.id , title: obj.title, content: obj.content, imagePath: res.post.imagePath};
+      // const id = res.postId;
+      // post.id = id;
       this.posts.push(post);
       this.postUpdated.next([...this.posts]);
       this.router.navigate(['/']);
@@ -58,10 +65,21 @@ constructor(private http: HttpClient, private router: Router) { }
   }
 
   updatePost(id: string, obj: any) {
-    const post: Post = {id: obj?.id , title: obj.title, content: obj.content};
-    this.http.put(`http://localhost:3000/mean/post/${id}`, post).subscribe(response => {
+    let postData: any;
+    if (typeof(obj.image) === 'object') {
+      postData = new FormData();
+      postData.append("id", obj.id);
+      postData.append("title", obj.title);
+      postData.append("content", obj.content);
+      postData.append("image", obj.image, obj.title);
+    } else {
+      postData = {id: obj?.id , title: obj.title, content: obj.content, imagePath: obj.image};
+    }
+    console.log(postData);
+    this.http.put(`http://localhost:3000/mean/post/${id}`, postData).subscribe(response => {
       const updatePosts = [...this.posts];
-      const oldPostIndex = updatePosts.findIndex(p => p.id === post.id);
+      const oldPostIndex = updatePosts.findIndex(p => p.id === obj.id);
+      const post: Post = {id: obj?.id , title: obj.title, content: obj.content, imagePath: ''};
       updatePosts[oldPostIndex] = post;
       this.posts = updatePosts;
       this.postUpdated.next([...this.posts]);

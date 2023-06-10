@@ -9,7 +9,7 @@ import { PostListingComponent } from './posts/post-listing/post-listing.componen
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http'
 
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,  
+    ReactiveFormsModule,  
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,

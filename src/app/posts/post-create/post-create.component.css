@@ -5,3 +5,30 @@ mat-form-field {
 mat-progress-bar {
     margin: auto;
 }
+
+.image-picker {
+    padding-left: 10px;
+}
+
+.save-button, .image-picker {
+    padding-bottom: 20px;
+}
+
+.save-button {
+    padding-left: 90%;
+}
+
+input[type="file"] {
+    visibility: hidden;
+}
+
+.image-priview {
+    height: 5rem;
+    margin: 1rem 0;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+.image-priview img {
+    height: 100%;
+}

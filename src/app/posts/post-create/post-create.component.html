@@ -1,18 +1,55 @@
+<!-- Reactive Form approach -->
 <mat-card>
+    <mat-progress-bar mode="indeterminate"  *ngIf="isLoading"></mat-progress-bar>
+    <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading">
+        <mat-form-field>
+            <input matInput type="text" formControlName="title" placeholder="Title">
+            <mat-error *ngIf="form.get('title').invalid">Enter Title</mat-error>
+        </mat-form-field>
+        <div class="image-picker">
+            <button mat-stroked-button type="button" (click)="filePpicker.click()">Pick Image</button>
+            <input type="file" #filePpicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-priview" *ngIf="imgPreview !== '' && imgPreview !== null && form.get('image').valid">
+            <img *ngIf="!onImageEdit" [src]="imgPreview" [alt]="form.value.title">
+            <img *ngIf="onImageEdit" [src]="postRowData.imagePath" [alt]="form.value.title">
+        </div>
+        <mat-form-field>
+            <input matInput type="text"  formControlName="content" placeholder="Content">
+            <mat-error *ngIf="form.get('content').invalid">Enter Content</mat-error>
+        </mat-form-field>
+        <div class="save-button">
+        <button 
+            mat-raised-button
+            color="primary"
+            type="submit"
+            >Save Post </button>
+        </div>            
+    </form>
+</mat-card>
+
+<!-- Templatedriven Form approach -->
+<!-- <mat-card>
     <mat-progress-bar mode="indeterminate"  *ngIf="isLoading"></mat-progress-bar>
     <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
         <mat-form-field>
             <input matInput type="text" name="title" [ngModel]= "postRowData?.title" required minlength="3" #title="ngModel" placeholder="Title">
             <mat-error *ngIf="title.invalid">Enter Title</mat-error>
         </mat-form-field>
+        <div class="imagePicker">
+            <button mat-stroked-button type="button" (click)="filePpicker.click()">Pick Image</button>
+            <input type="file" #filePpicker>
+        </div>
         <mat-form-field>
             <input matInput type="text" name="content" [ngModel]= "postRowData?.content" required #content="ngModel" placeholder="Content">
             <mat-error *ngIf="content.invalid">Enter Content</mat-error>
         </mat-form-field>
+        <div class="saveButton">
         <button 
             mat-raised-button
             color="primary"
             type="submit"
             >Save Post </button>
+        </div>            
     </form>
-</mat-card>
+</mat-card> -->
